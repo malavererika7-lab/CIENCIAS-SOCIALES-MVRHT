@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storybook Educativo - Reino Chimú | Ciencias Sociales - I.E. 0148 MVRHT</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        carmine: '#C8102E',
+                        incaGold: '#D4AF37',
+                        incaGoldDark: '#B38F24',
+                        jungleGreen: '#1B4D3E',
+                        sandBg: '#FAF7F2',
+                        darkBg: '#121826',
+                        darkCard: '#1E293B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Georgia', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom highlight styles */
+        mark.hl-yellow { background-color: #fef08a; color: #1e293b; padding: 2px 4px; border-radius: 4px; }
+        mark.hl-green { background-color: #bbf7d0; color: #1e293b; padding: 2px 4px; border-radius: 4px; }
+        mark.hl-blue { background-color: #bfdbfe; color: #1e293b; padding: 2px 4px; border-radius: 4px; }
+        
+        .dark mark.hl-yellow { background-color: #854d0e; color: #fef08a; }
+        .dark mark.hl-green { background-color: #166534; color: #bbf7d0; }
+        .dark mark.hl-blue { background-color: #1e40af; color: #bfdbfe; }
+
+        /* Glossary term style */
+        .glossary-term {
+            color: #C8102E;
+            font-weight: 600;
+            border-bottom: 2px dashed #C8102E;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 0 2px;
+        }
+        .dark .glossary-term {
+            color: #f87171;
+            border-bottom-color: #f87171;
+        }
+        .glossary-term:hover {
+            background-color: rgba(200, 16, 46, 0.15);
+            border-radius: 3px;
+        }
+
+        /* Printable Diploma Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #diploma-printable, #diploma-printable * {
+                visibility: visible;
+            }
+            #diploma-printable {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 20px;
+                background: white !important;
+                color: black !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Moche motif background border pattern */
+        .moche-border {
+            background-image: repeating-linear-gradient(45deg, #D4AF37 0, #D4AF37 10px, transparent 0, transparent 20px);
+        }
+    </style>
+</head>
+<body class="bg-sandBg dark:bg-darkBg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 font-sans">
+
+    <!-- TOP HEADER / INSTITUTIONAL BAR -->
+    <header class="bg-gradient-to-r from-carmine via-red-800 to-carmine text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Logo & School Info -->
+            <div class="flex items-center space-x-3">
+                <!-- SVG Official Badge (Faithful Recreation of Image) -->
+                <div class="w-16 h-16 flex-shrink-0 bg-white rounded-lg p-1 shadow-md">
+                    <svg viewBox="0 0 200 220" class="w-full h-full">
+                        <!-- Shield Outer Border -->
+                        <path d="M 15 25 Q 100 0 185 25 L 185 150 Q 100 220 15 150 Z" fill="#C8102E" stroke="#121826" stroke-width="6" stroke-linejoin="round"/>
+                        
+                        <!-- Top Banner (Flag Section: Red - White - Red) -->
+                        <path d="M 17 25 Q 100 2 183 25 L 183 65 L 17 65 Z" fill="#ffffff" stroke="#121826" stroke-width="4"/>
+                        <!-- Left Red Stripe -->
+                        <path d="M 17 25 Q 70 12 70 25 L 70 65 L 17 65 Z" fill="#C8102E" stroke="#121826" stroke-width="3"/>
+                        <!-- Right Red Stripe -->
+                        <path d="M 130 25 Q 130 12 183 25 L 183 65 L 130 65 Z" fill="#C8102E" stroke="#121826" stroke-width="3"/>
+
+                        <!-- Letters I E M in top flag banner -->
+                        <text x="43" y="52" font-size="28" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">I</text>
+                        <text x="100" y="52" font-size="28" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">E</text>
+                        <text x="157" y="52" font-size="28" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">M</text>
+
+                        <!-- Curved Text M.V.R.H.T in main red field -->
+                        <path id="text-curve" d="M 40 100 Q 100 70 160 100" fill="none" stroke="none"/>
+                        <text font-size="18" font-weight="900" font-family="Arial, sans-serif" fill="#121826">
+                            <textPath href="#text-curve" startOffset="50%" text-anchor="middle">M.V.R.H.T</textPath>
+                        </text>
+
+                        <!-- Map Silhouette of Peru (White with black border) -->
+                        <g transform="translate(68, 88) scale(0.65)">
+                            <path d="M 45 10 L 65 5 L 85 20 L 78 45 L 70 60 L 85 85 L 68 115 L 50 98 L 40 70 L 15 45 L 25 30 Z" fill="#ffffff" stroke="#121826" stroke-width="4" stroke-linejoin="round"/>
+                            <!-- Numbers 1, 4, 8 vertically inside map -->
+                            <text x="50" y="42" font-size="26" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">1</text>
+                            <text x="50" y="70" font-size="26" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">4</text>
+                            <text x="50" y="98" font-size="26" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">8</text>
+                        </g>
+
+                        <!-- Green Laurel Leaves / Wreath at bottom sides -->
+                        <!-- Left Branch -->
+                        <path d="M 38 110 C 25 140 45 195 95 202" fill="none" stroke="#00A650" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M 38 110 C 25 140 45 195 95 202" fill="none" stroke="#121826" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Right Branch -->
+                        <path d="M 162 110 C 175 140 155 195 105 202" fill="none" stroke="#00A650" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M 162 110 C 175 140 155 195 105 202" fill="none" stroke="#121826" stroke-width="3" stroke-linecap="round"/>
+
+                        <!-- Laurel Leaf Detail Cuts -->
+                        <g stroke="#121826" stroke-width="2" fill="#00A650">
+                            <circle cx="36" cy="120" r="5"/>
+                            <circle cx="30" cy="140" r="5"/>
+                            <circle cx="35" cy="162" r="5"/>
+                            <circle cx="50" cy="182" r="5"/>
+                            <circle cx="70" cy="196" r="5"/>
+
+                            <circle cx="164" cy="120" r="5"/>
+                            <circle cx="170" cy="140" r="5"/>
+                            <circle cx="165" cy="162" r="5"/>
+                            <circle cx="150" cy="182" r="5"/>
+                            <circle cx="130" cy="196" r="5"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div>
+                    <h1 class="text-sm md:text-base font-extrabold tracking-wide uppercase leading-tight">
+                        I.E. N° 0148 "Maestro Víctor Raúl Haya de la Torre"
+                    </h1>
+                    <p class="text-xs text-amber-200 font-medium">
+                        San Juan de Lurigancho • Área: Ciencias Sociales • AIP 2026
+                    </p>
+                </div>
+            </div>
+
+            <!-- Gamification Header Bar & Quick Controls -->
+            <div class="flex items-center space-x-4 ml-auto">
+                <!-- Stars Badge -->
+                <div class="flex items-center bg-amber-400 text-slate-900 font-bold px-3 py-1.5 rounded-full shadow-md text-sm">
+                    <i class="fa-solid fa-star text-amber-800 mr-1.5 text-base"></i>
+                    <span id="star-count">0</span> / 9 <span class="hidden sm:inline ml-1">Estrellas</span>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="btn-theme" onclick="toggleTheme()" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition" title="Cambiar Modo Claro/Oscuro">
+                    <i class="fa-solid fa-moon text-lg" id="theme-icon"></i>
+                </button>
+
+                <!-- Font Resizer -->
+                <div class="flex items-center bg-white/10 rounded-lg p-1 text-xs">
+                    <button onclick="changeFontSize(-1)" class="px-2 py-1 hover:bg-white/20 rounded font-bold" title="Disminuir Letra">A-</button>
+                    <span class="px-1 text-amber-200">|</span>
+                    <button onclick="changeFontSize(1)" class="px-2 py-1 hover:bg-white/20 rounded font-bold" title="Aumentar Letra">A+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Progress Bar -->
+        <div class="w-full bg-red-950 h-2">
+            <div id="global-progress" class="bg-gradient-to-r from-amber-400 to-yellow-300 h-2 transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
+
+        <!-- TITLE BANNER -->
+        <div class="text-center mb-8 bg-white dark:bg-darkCard p-6 rounded-2xl shadow-md border-t-4 border-carmine">
+            <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+                Área: Ciencias Sociales • CNEB (Interpretación Histórica y Gestión del Espacio y Ambiente)
+            </span>
+            <h2 class="text-2xl md:text-4xl font-black text-carmine dark:text-red-400 tracking-tight">
+                «El Misterio de las Obras Hidráulicas: Un Viaje por el Reino Chimú»
+            </h2>
+            <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-2 max-w-3xl mx-auto">
+                Analiza las fuentes históricas sobre los ingenieros del desierto, comprende la organización del espacio geográfico chimú y su resiliencia ante el Fenómeno de El Niño Costero.
+            </p>
+        </div>
+
+        <!-- CHAPTER NAVIGATION TABS -->
+        <div class="flex border-b border-slate-300 dark:border-slate-700 mb-6 overflow-x-auto">
+            <button id="tab-cap1" onclick="switchChapter(1)" class="chapter-tab flex-1 py-3 px-4 font-bold text-center border-b-4 border-carmine text-carmine dark:text-red-400 flex items-center justify-center space-x-2 whitespace-nowrap">
+                <span class="w-6 h-6 rounded-full bg-carmine text-white text-xs flex items-center justify-center">1</span>
+                <span>Capítulo 1: Chan Chan</span>
+            </button>
+            <button id="tab-cap2" onclick="switchChapter(2)" class="chapter-tab flex-1 py-3 px-4 font-medium text-slate-500 border-b-4 border-transparent hover:text-carmine flex items-center justify-center space-x-2 whitespace-nowrap">
+                <span class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 dark:bg-slate-700 dark:text-slate-300 text-xs flex items-center justify-center">2</span>
+                <span>Capítulo 2: El Agua Chimú</span>
+            </button>
+            <button id="tab-cap3" onclick="switchChapter(3)" class="chapter-tab flex-1 py-3 px-4 font-medium text-slate-500 border-b-4 border-transparent hover:text-carmine flex items-center justify-center space-x-2 whitespace-nowrap">
+                <span class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 dark:bg-slate-700 dark:text-slate-300 text-xs flex items-center justify-center">3</span>
+                <span>Capítulo 3: El Niño y la Resiliencia</span>
+            </button>
+        </div>
+
+        <!-- INTERACTIVE HIGHLIGHTER TOOLBAR -->
+        <div class="bg-white dark:bg-darkCard p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                <i class="fa-solid fa-highlighter text-carmine"></i>
+                <span>Plumón Resaltador Interactivo:</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="setHighlighterColor('yellow')" id="hl-btn-yellow" class="hl-picker-btn flex items-center space-x-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-yellow-200 text-yellow-900 ring-2 ring-yellow-500 shadow-sm">
+                    <span class="w-3 h-3 rounded-full bg-yellow-400 border border-yellow-600"></span>
+                    <span>Idea Principal / Hecho Histórico</span>
+                </button>
+                <button onclick="setHighlighterColor('green')" id="hl-btn-green" class="hl-picker-btn flex items-center space-x-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-green-100 text-green-900 hover:bg-green-200">
+                    <span class="w-3 h-3 rounded-full bg-green-400 border border-green-600"></span>
+                    <span>Vocabulario Geográfico</span>
+                </button>
+                <button onclick="setHighlighterColor('blue')" id="hl-btn-blue" class="hl-picker-btn flex items-center space-x-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-100 text-blue-900 hover:bg-blue-200">
+                    <span class="w-3 h-3 rounded-full bg-blue-400 border border-blue-600"></span>
+                    <span>Duda / Análisis Causal</span>
+                </button>
+                <button onclick="applyHighlightToSelection()" class="px-3 py-1.5 bg-carmine text-white rounded-lg text-xs font-bold hover:bg-red-700 transition flex items-center space-x-1">
+                    <i class="fa-solid fa-paint-brush"></i>
+                    <span>Resaltar Selección</span>
+                </button>
+                <button onclick="clearHighlights()" class="px-2 py-1.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs hover:bg-slate-300 transition" title="Borrar resaltados">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- READING CONTAINER WITH ADJUSTABLE FONT SIZE -->
+        <div id="story-content-container" class="text-base leading-relaxed space-y-6">
+
+            <!-- CAPÍTULO 1 -->
+            <div id="chapter-1" class="chapter-block bg-white dark:bg-darkCard p-6 md:p-8 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between border-b pb-3 mb-4 border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl md:text-2xl font-bold text-carmine dark:text-red-400">Capítulo 1: El Reino Chimú y la Gran Ciudad de Chan Chan</h3>
+                    <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold">Espacio Geográfico y Sociedad</span>
+                </div>
+
+                <div class="space-y-4 story-text">
+                    <p>
+                        Entre los años 1000 y 1470 d.C., en la franja desértica de la costa norte del Perú, se consolidó el Estado Chimú. Ocupó un territorio estratégico extendiéndose desde Tumbes hasta Lima, teniendo su centro político y administrativo en el árido valle del río Moche. Allí erigieron Chan Chan, una de las mayores urbes prehispánicas, construida con muros de <span class="glossary-term" onclick="openGlossary('adobe')">adobe</span> decorados con relieves geométricos, felinos y peces, reflejando su profunda vinculación con el mar. En sus proximidades también destacaba la gran <span class="glossary-term" onclick="openGlossary('huaca')">huaca</span> ceremonial como centro de culto y gobernanza.
+                    </p>
+                    <p>
+                        La sociedad chimú presentó una marcada estratificación social. En la cima gobernaba el <span class="glossary-term" onclick="openGlossary('cie-quich')">Cie-quich</span>, máxima autoridad política y militar, seguido por los curacas de los valles dominados y una burocracia estatal. En la base social se encontraban los talentosos orfebres, ceramistas, agricultores y los audaces pescadores que navegaban el Océano Pacífico sobre sus tradicionales caballitos de <span class="glossary-term" onclick="openGlossary('totora')">totora</span>.
+                    </p>
+                    <p>
+                        Para administrar la producción agrícola y los tributos de los valles conquistados, los administradores estatales empleaban el <span class="glossary-term" onclick="openGlossary('quipu')">quipu</span> como instrumento de registro. Asimismo, las ceremonias religiosas fortalecían la cohesión social rindiendo tributo al sagrado <span class="glossary-term" onclick="openGlossary('apu')">apu</span> de los cerros y a la <span class="glossary-term" onclick="openGlossary('pachamama')">pachamama</span>, solicitando equilibrio ambiental y cosechas abundantes.
+                    </p>
+                </div>
+
+                <!-- Chapter 1 Quiz Section -->
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <h4 class="text-lg font-bold text-jungleGreen dark:text-emerald-400 mb-4 flex items-center">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Evaluación de Ciencias Sociales - Capítulo 1
+                    </h4>
+
+                    <div class="space-y-6">
+                        <!-- Q1 -->
+                        <div id="q1-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-3">1. (Interpretación Histórica) ¿Cuál era el rol del Cie-quich en la estructura estatal chimú?</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q1" value="A" class="mr-2"> A) Un comerciante itinerante del litoral
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q1" value="B" class="mr-2"> B) El soberano supremo que centralizaba el poder político, militar y religioso
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q1" value="C" class="mr-2"> C) Un jefe local encargado exclusivamente de la pesca
+                                </label>
+                            </div>
+                            <button onclick="checkQ1()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q1-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div id="q2-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-2">2. (Ordenamiento Espacial/Social) Ordena la jerarquía social chimú desde la máxima autoridad hasta la base productiva:</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Selecciona el orden correcto:</p>
+                            <select id="q2-select" class="p-2 border rounded-lg text-sm bg-white dark:bg-darkCard text-slate-800 dark:text-slate-100 border-slate-300 dark:border-slate-600 w-full md:w-auto">
+                                <option value="">-- Selecciona una secuencia --</option>
+                                <option value="1">Pescadores -> Cie-quich -> Curacas locales</option>
+                                <option value="2">Cie-quich -> Curacas y burocracia -> Artesanos, agricultores y pescadores</option>
+                                <option value="3">Artesanos -> Cie-quich -> Pescadores</option>
+                            </select>
+                            <button onclick="checkQ2()" class="mt-3 block px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Orden</button>
+                            <div id="q2-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div id="q3-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-2">3. (Análisis de Fuentes) Los restos arqueológicos de Chan Chan decorados con relieves marinos constituyen una fuente:</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q3" value="A" class="mr-2"> A) Fuente escrita secundaria
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q3" value="B" class="mr-2"> B) Fuente material primaria
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q3" value="C" class="mr-2"> C) Fuente oral del siglo XX
+                                </label>
+                            </div>
+                            <button onclick="checkQ3()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q3-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAPÍTULO 2 -->
+            <div id="chapter-2" class="chapter-block bg-white dark:bg-darkCard p-6 md:p-8 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 hidden">
+                <div class="flex items-center justify-between border-b pb-3 mb-4 border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl md:text-2xl font-bold text-carmine dark:text-red-400">Capítulo 2: Los Secretos del Agua Chimú</h3>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-bold">Gestión Tecnológica del Espacio</span>
+                </div>
+
+                <div class="space-y-4 story-text">
+                    <p>
+                        Para dominar las restricciones del desierto costero y garantizar la seguridad alimentaria de una población en crecimiento, los ingenieros chimúes desarrollaron sofisticadas obras hidráulicas. Comprendieron la pendiente del relieve e interconectaron cuencas hidrográficas mediante acueductos y extensos canales de irrigación.
+                    </p>
+                    <p>
+                        Su obra cumbre fue el monumental Canal La Cumbre (o canal trasvase Chicama-Moche), una hazaña de la ingeniería hidráulica prehispánica con más de 80 kilómetros de recorrido. Este sistema permitía trasladar los caudales del río Chicama hacia el valle desértico de Moche, manteniendo una pendiente constante muy precisa de menos del 1% para evitar la erosión y la pérdida del recurso hídrico.
+                    </p>
+                    <p>
+                        En áreas donde el agua superficial era inexistente, aplicaron la técnica de los <span class="glossary-term" onclick="openGlossary('huachaque')">huachaques</span> (pozas o chacras hundidas), técnica diferente a los <span class="glossary-term" onclick="openGlossary('camellones')">camellones</span> o waru waru del altiplano. Excavaban amplias depresiones agrícolas hasta alcanzar el nivel del agua subterránea (napa freática) para cultivar maíz, ají y calabazas. El <span class="glossary-term" onclick="openGlossary('dosel')">dosel</span> vegetal formado por los totorales minimizaba la evaporación y estabilizaba el microclima local.
+                    </p>
+                </div>
+
+                <!-- Chapter 2 Quiz Section -->
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <h4 class="text-lg font-bold text-jungleGreen dark:text-emerald-400 mb-4 flex items-center">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Evaluación de Ciencias Sociales - Capítulo 2
+                    </h4>
+
+                    <div class="space-y-6">
+                        <!-- Q4 -->
+                        <div id="q4-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-3">4. (Gestión Ambiental) ¿Cuál era la función geográfica clave del huachaque en el desierto costero?</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q4" value="A" class="mr-2"> A) Aprovechar directamente la humedad de la napa freática subterránea para la agricultura sin canales
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q4" value="B" class="mr-2"> B) Evaporar el agua marina para extraer sal mineral
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q4" value="C" class="mr-2"> C) Servir como depósito exclusivo para guardar armas de bronce
+                                </label>
+                            </div>
+                            <button onclick="checkQ4()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q4-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div id="q5-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-2">5. (Interpretación de la Geografía) El Canal La Cumbre demuestra que los chimúes lograsieron:</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q5" value="A" class="mr-2"> A) Modificar el clima desértico para que lloviera todo el año
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q5" value="B" class="mr-2"> B) Conectar hidrológicamente dos valles distintos (Chicama y Moche) ampliando la frontera agrícola
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q5" value="C" class="mr-2"> C) Impedir el comercio marítimo con otros pueblos
+                                </label>
+                            </div>
+                            <button onclick="checkQ5()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q5-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div id="q6-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-2">6. Diferencia técnica espacial entre los "huachaques" de la costa y los "camellones" de la sierra/altiplano:</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q6" value="A" class="mr-2"> A) Los huachaques son pozas excavadas en la tierra; los camellones son plataformas elevadas rodeadas de agua
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q6" value="B" class="mr-2"> B) Ambos son exactamente el mismo sistema de andenería
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q6" value="C" class="mr-2"> C) Los huachaques se construían en las cumbres de los Andes
+                                </label>
+                            </div>
+                            <button onclick="checkQ6()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q6-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAPÍTULO 3 -->
+            <div id="chapter-3" class="chapter-block bg-white dark:bg-darkCard p-6 md:p-8 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 hidden">
+                <div class="flex items-center justify-between border-b pb-3 mb-4 border-slate-200 dark:border-slate-700">
+                    <h3 class="text-xl md:text-2xl font-bold text-carmine dark:text-red-400">Capítulo 3: Chan Chan frente al Fenómeno de El Niño</h3>
+                    <span class="text-xs bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full font-bold">Vulnerabilidad y Gestión de Riesgo de Desastres</span>
+                </div>
+
+                <div class="space-y-4 story-text">
+                    <p>
+                        Pese a su esplendor, la sociedad chimú enfrentaba eventos climáticos extremos periódicos provocados por el megafenómeno conocido hoy como <span class="glossary-term" onclick="openGlossary('el-nino')">El Niño Costero</span>. Este evento oceanográfico-atmosférico genera un aumento anómalo de la temperatura del mar, desencadenando lluvias torrenciales inusuales sobre el desierto costero.
+                    </p>
+                    <p>
+                        El impacto en la infraestructura era severo. Las precipitaciones erosionaban los muros de adobe no protegidos y colmaban los canales de sedimentos. Sin embargo, el estudio de fuentes históricas y arqueológicas demuestra la capacidad de respuesta chimú: implementaron drenajes pluviales en los grandes patios de las ciudadelas y aplicaron revestimientos impermeables de barro mezclado con resinas vegetales para proteger los bajorrelieves.
+                    </p>
+                    <p>
+                        En el contexto actual del siglo XXI, para la comunidad educativa de la I.E. N° 0148 en San Juan de Lurigancho y de todo el país, esta experiencia histórica es vital para la gestión del riesgo de desastres (GRD). Comprender la vulnerabilidad territorial ante huaycos e inundaciones nos compromete a no construir en cauces de quebradas, mantener limpios los drenajes y diseñar planes de contingencia familiar y escolar alineados a la prevención ambiental.
+                    </p>
+                </div>
+
+                <!-- Chapter 3 Quiz Section -->
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <h4 class="text-lg font-bold text-jungleGreen dark:text-emerald-400 mb-4 flex items-center">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Evaluación de Ciencias Sociales - Capítulo 3
+                    </h4>
+
+                    <div class="space-y-6">
+                        <!-- Q7 -->
+                        <div id="q7-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-3">7. (Causalidad Histórica y Ambiental) ¿Cuál es la causa principal de la vulnerabilidad de Chan Chan ante El Niño Costero?</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q7" value="A" class="mr-2"> A) La ubicación en valles elevados sin acceso al agua
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q7" value="B" class="mr-2"> B) El uso predominante del adobe (barro) en un desierto susceptible a lluvias extremas torrenciales
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q7" value="C" class="mr-2"> C) El uso de piedra labrada impermeable
+                                </label>
+                            </div>
+                            <button onclick="checkQ7()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q7-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+
+                        <!-- Q8 -->
+                        <div id="q8-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-2">8. (Gestión del Riesgo en S.J.L.) ¿Qué medida preventiva actual aplica las lecciones del pasado frente a El Niño?</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q8" value="A" class="mr-2"> A) Ocupar las fajas marginales y cauces de quebradas secas
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q8" value="B" class="mr-2"> B) Mantener limpios los canales de drenaje, descolmatar ríos y elaborar un plan de emergencia escolar
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q8" value="C" class="mr-2"> C) Arrojar desmonte en el cauce de los ríos
+                                </label>
+                            </div>
+                            <button onclick="checkQ8()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q8-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+
+                        <!-- Q9 -->
+                        <div id="q9-box" class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p class="font-semibold mb-2">9. (Análisis de Conceptos) La resiliencia territorial de una sociedad frente a desastres naturales significa:</p>
+                            <div class="space-y-2 text-sm">
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q9" value="A" class="mr-2"> A) La capacidad de una comunidad de organizarse, adaptarnos y recuperarse tras un impacto adverso
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q9" value="B" class="mr-2"> B) Abandonar definitivamente todo conocimiento técnico
+                                </label>
+                                <label class="flex items-center p-2 rounded-lg bg-white dark:bg-darkCard hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer border border-slate-200 dark:border-slate-700">
+                                    <input type="radio" name="q9" value="C" class="mr-2"> C) Esperar que los desastres ocurran sin hacer planeación previa
+                                </label>
+                            </div>
+                            <button onclick="checkQ9()" class="mt-3 px-4 py-1.5 bg-carmine text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Comprobar Respuesta</button>
+                            <div id="q9-feedback" class="mt-2 text-xs font-bold hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DIPLOMA GENERATOR TRIGGER BOX -->
+        <div id="diploma-unlock-card" class="mt-10 p-6 bg-gradient-to-br from-amber-500/10 via-amber-100/50 to-amber-500/10 dark:from-amber-950/30 dark:to-slate-800 border-2 border-dashed border-amber-500 rounded-2xl text-center shadow-lg">
+            <i class="fa-solid fa-award text-4xl text-amber-500 mb-2"></i>
+            <h3 class="text-xl font-black text-slate-800 dark:text-amber-300">
+                Diploma de Honor Institucional
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto my-2">
+                Completa todos los ejercicios interactivos acumulando estrellas para desbloquear e imprimir tu diploma oficial de la I.E. N° 0148.
+            </p>
+            <div id="diploma-status-msg" class="text-xs font-bold text-carmine mb-3">
+                Progreso actual: <span id="diploma-star-val">0</span>/9 Estrellas
+            </div>
+            
+            <!-- Input Form for Diploma -->
+            <div id="diploma-form" class="max-w-md mx-auto space-y-3 hidden">
+                <input type="text" id="student-name-input" placeholder="Escribe tus Nombres y Apellidos completos" class="w-full p-2.5 rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white text-sm focus:ring-2 focus:ring-carmine focus:outline-none">
+                <button onclick="generateDiploma()" class="w-full py-3 bg-gradient-to-r from-carmine to-red-700 hover:from-red-700 hover:to-carmine text-white font-extrabold rounded-xl shadow-md transition transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-certificate mr-2"></i> Generar y Ver Diploma de Honor
+                </button>
+            </div>
+        </div>
+
+        <!-- DIPLOMA PRINTABLE MODAL / CONTAINER -->
+        <div id="diploma-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden overflow-y-auto">
+            <div class="bg-white text-slate-900 rounded-2xl max-w-4xl w-full p-2 relative shadow-2xl my-8">
+                <!-- Close Button -->
+                <button onclick="closeDiplomaModal()" class="no-print absolute top-3 right-3 bg-red-600 text-white w-9 h-9 rounded-full font-bold hover:bg-red-700 shadow flex items-center justify-center z-10">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <!-- DIPLOMA LAYOUT FOR PRINTING -->
+                <div id="diploma-printable" class="p-8 border-8 border-double border-amber-600 rounded-xl relative bg-gradient-to-b from-amber-50/50 via-white to-amber-50/30">
+                    <!-- Corner Decorative Motifs -->
+                    <div class="absolute top-2 left-2 w-12 h-12 border-t-4 border-l-4 border-amber-600"></div>
+                    <div class="absolute top-2 right-2 w-12 h-12 border-t-4 border-r-4 border-amber-600"></div>
+                    <div class="absolute bottom-2 left-2 w-12 h-12 border-b-4 border-l-4 border-amber-600"></div>
+                    <div class="absolute bottom-2 right-2 w-12 h-12 border-b-4 border-r-4 border-amber-600"></div>
+
+                    <!-- Header with Badge -->
+                    <div class="flex items-center justify-between border-b-2 border-amber-500 pb-4 mb-6">
+                        <div class="w-20 h-20 flex-shrink-0">
+                            <!-- SVG Badge Replica in Diploma (Faithful Reconstruction) -->
+                            <svg viewBox="0 0 200 220" class="w-full h-full">
+                                <path d="M 15 25 Q 100 0 185 25 L 185 150 Q 100 220 15 150 Z" fill="#C8102E" stroke="#121826" stroke-width="6" stroke-linejoin="round"/>
+                                <path d="M 17 25 Q 100 2 183 25 L 183 65 L 17 65 Z" fill="#ffffff" stroke="#121826" stroke-width="4"/>
+                                <path d="M 17 25 Q 70 12 70 25 L 70 65 L 17 65 Z" fill="#C8102E" stroke="#121826" stroke-width="3"/>
+                                <path d="M 130 25 Q 130 12 183 25 L 183 65 L 130 65 Z" fill="#C8102E" stroke="#121826" stroke-width="3"/>
+                                <text x="43" y="52" font-size="28" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">I</text>
+                                <text x="100" y="52" font-size="28" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">E</text>
+                                <text x="157" y="52" font-size="28" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">M</text>
+                                <path id="text-curve-dip" d="M 40 100 Q 100 70 160 100" fill="none" stroke="none"/>
+                                <text font-size="18" font-weight="900" font-family="Arial, sans-serif" fill="#121826">
+                                    <textPath href="#text-curve-dip" startOffset="50%" text-anchor="middle">M.V.R.H.T</textPath>
+                                </text>
+                                <g transform="translate(68, 88) scale(0.65)">
+                                    <path d="M 45 10 L 65 5 L 85 20 L 78 45 L 70 60 L 85 85 L 68 115 L 50 98 L 40 70 L 15 45 L 25 30 Z" fill="#ffffff" stroke="#121826" stroke-width="4" stroke-linejoin="round"/>
+                                    <text x="50" y="42" font-size="26" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">1</text>
+                                    <text x="50" y="70" font-size="26" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">4</text>
+                                    <text x="50" y="98" font-size="26" font-weight="900" font-family="Arial, sans-serif" fill="#121826" text-anchor="middle">8</text>
+                                </g>
+                                <path d="M 38 110 C 25 140 45 195 95 202" fill="none" stroke="#00A650" stroke-width="12" stroke-linecap="round"/>
+                                <path d="M 162 110 C 175 140 155 195 105 202" fill="none" stroke="#00A650" stroke-width="12" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+
+                        <div class="text-center flex-1 px-4">
+                            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest">MINISTERIO DE EDUCACIÓN • UGEL 05</h2>
+                            <h1 class="text-base font-black text-carmine tracking-wide uppercase">
+                                I.E. N° 0148 "MAESTRO VÍCTOR RAÚL HAYA DE LA TORRE"
+                            </h1>
+                            <p class="text-xs text-slate-600 font-semibold">San Juan de Lurigancho - ÁREA DE CIENCIAS SOCIALES (AIP)</p>
+                        </div>
+
+                        <div class="w-20 text-right">
+                            <span class="text-3xl text-amber-500"><i class="fa-solid fa-ribbon"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Main Certificate Text -->
+                    <div class="text-center my-6 space-y-4">
+                        <h2 class="text-3xl font-black font-serif text-amber-700 tracking-wider uppercase">
+                            DIPLOMA DE HONOR
+                        </h2>
+                        <p class="text-sm font-medium text-slate-700">
+                            Otorgado con orgullo al/a la estudiante de 1° de Secundaria:
+                        </p>
+                        <div id="diploma-student-name" class="text-2xl md:text-3xl font-extrabold text-carmine border-b-2 border-amber-600 inline-block px-8 py-1 my-2">
+                            [ NOMBRE DEL ESTUDIANTE ]
+                        </div>
+                        <p class="text-sm text-slate-700 max-w-2xl mx-auto leading-relaxed">
+                            Por haber completado satisfactoriamente la lectura interactiva y evaluación en el Área de <strong class="text-slate-900">Ciencias Sociales</strong>:<br>
+                            <strong class="text-slate-900">«El Misterio de las Obras Hidráulicas: Un Viaje por el Reino Chimú»</strong>,<br>
+                            demostrando el logro de competencias del CNEB en <em class="text-carmine font-semibold">Interpretación Histórica</em> y <em class="text-carmine font-semibold">Gestión Responsable del Espacio y el Ambiente</em>.
+                        </p>
+                    </div>
+
+                    <!-- Metrics & Details -->
+                    <div class="flex items-center justify-around bg-amber-100/60 p-4 rounded-xl border border-amber-300 my-6">
+                        <div class="text-center">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Estrellas Obtenidas</p>
+                            <p class="text-xl font-black text-amber-700" id="diploma-stars-result">9 / 9 ⭐</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Fecha de Emisión</p>
+                            <p class="text-sm font-bold text-slate-800" id="diploma-date">--/--/2026</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Área Curricular</p>
+                            <p class="text-sm font-bold text-slate-800">Ciencias Sociales - AIP</p>
+                        </div>
+                    </div>
+
+                    <!-- Signatures -->
+                    <div class="grid grid-cols-2 gap-8 pt-12 mt-8 border-t border-slate-300 text-center text-xs">
+                        <div>
+                            <div class="w-40 border-b border-slate-800 mx-auto mb-1"></div>
+                            <p class="font-bold text-slate-800">Docente de Ciencias Sociales / AIP</p>
+                            <p class="text-slate-500">I.E. N° 0148 MVRHT - S.J.L.</p>
+                        </div>
+                        <div>
+                            <div class="w-40 border-b border-slate-800 mx-auto mb-1"></div>
+                            <p class="font-bold text-slate-800">Dirección Institucional</p>
+                            <p class="text-slate-500">Nivel Secundaria - 2026</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Print Action Button -->
+                <div class="p-4 bg-slate-100 rounded-b-xl flex justify-end space-x-3 no-print">
+                    <button onclick="closeDiplomaModal()" class="px-4 py-2 bg-slate-300 hover:bg-slate-400 text-slate-800 text-sm font-bold rounded-lg transition">Cerrar</button>
+                    <button onclick="window.print()" class="px-5 py-2 bg-carmine hover:bg-red-700 text-white text-sm font-bold rounded-lg shadow transition flex items-center space-x-2">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Imprimir / Guardar PDF</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- GLOSSARY MODAL WITH SYNTHETIC TTS SPEECH -->
+    <div id="glossary-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-darkCard rounded-2xl max-w-md w-full p-6 shadow-2xl border-t-4 border-carmine relative transform transition-all">
+            <button onclick="closeGlossary()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="flex items-center space-x-2 text-carmine dark:text-red-400 mb-2">
+                <i class="fa-solid fa-earth-americas text-xl"></i>
+                <span class="text-xs font-bold uppercase tracking-wider">Glosario de Ciencias Sociales (CNEB)</span>
+            </div>
+            <h3 id="g-word" class="text-2xl font-black text-slate-800 dark:text-white capitalize mb-1">Palabra</h3>
+            <p id="g-etymology" class="text-xs italic text-amber-700 dark:text-amber-400 mb-4">Etimología...</p>
+
+            <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                <div>
+                    <strong class="text-slate-800 dark:text-slate-100 font-bold block text-xs uppercase">Definición Histórico-Geográfica:</strong>
+                    <p id="g-def">Definición detallada aquí.</p>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <strong class="text-slate-800 dark:text-slate-100 font-bold block text-xs uppercase mb-1">Ejemplo de uso en Ciencias Sociales:</strong>
+                    <p id="g-example" class="italic">"Ejemplo en la lectura..."</p>
+                </div>
+            </div>
+
+            <!-- TTS Speech Button -->
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <button onclick="speakCurrentWord()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                    <span>Escuchar Pronunciación (TTS)</span>
+                </button>
+                <button onclick="closeGlossary()" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl hover:bg-slate-300 transition">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
+            <p class="font-semibold text-slate-300">
+                I.E. N° 0148 "Maestro Víctor Raúl Haya de la Torre" — San Juan de Lurigancho
+            </p>
+            <p>Área de Ciencias Sociales • Aula de Innovación Pedagógica (AIP) • 1° Secundaria 2026 • CNEB Perú</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ----------------------------------------------------
+           1. GLOSSARY DATA & SYNTHETIC TTS ENGINE (CIENCIAS SOCIALES)
+           ---------------------------------------------------- */
+        const glossaryData = {
+            'huaca': {
+                word: 'Huaca',
+                etymology: 'Del quechua wak\'a (objeto o lugar sagrado).',
+                def: 'Espacio o monumento sagrado prehispánico dedicado a actividades ceremoniales, administrativas y funerarias.',
+                example: 'Las huacas de adobe en el centro de Chan Chan albergaban las tumbas reales de los Cie-quich.'
+            },
+            'huachaque': {
+                word: 'Huachaque',
+                etymology: 'Del mochica / voz ancestral costera.',
+                def: 'Técnica agrícola costeña consistente en depresiones o pozas excavadas en el desierto para alcanzar la napa freática subterránea.',
+                example: 'Los huachaques permitieron el cultivo sin necesidad de desviaciones de agua de ríos en zonas secas.'
+            },
+            'camellones': {
+                word: 'Camellones (Waru Waru)',
+                etymology: 'Término geográfico agrícola andino.',
+                def: 'Campos elevados de cultivo rodeados de canales de agua en el altiplano para regular las heladas y la humedad.',
+                example: 'A diferencia de los huachaques costeros, los camellones se construían elevados en las zonas frías de Puno.'
+            },
+            'totora': {
+                word: 'Totora',
+                etymology: 'Del quechua tutura.',
+                def: 'Planta acuática (Schoenoplectus californicus) empleada desde la antigüedad para construir embarcaciones de pesca y techar viviendas.',
+                example: 'Los artesanos costeños cosechaban totora en las humedales para confeccionar caballitos de mar.'
+            },
+            'quipu': {
+                word: 'Quipu',
+                etymology: 'Del quechua khipu (nudo).',
+                def: 'Sistema de registro contable y administrativo mediante cuerdas de lana o algodón con nudos y códigos cromáticos.',
+                example: 'El estado chimú empleó el quipu para auditar la producción tributaria depositada en sus almacenes.'
+            },
+            'apu': {
+                word: 'Apu',
+                etymology: 'Del quechua apu (señor o montaña sagrada).',
+                def: 'Entidad sagrada encarnada en las montañas que tutela y provee agua de los glaciares a las cuencas.',
+                example: 'Los agricultores invocaban al apu para garantizar que los ríos trajeran caudal a los canales.'
+            },
+            'pachamama': {
+                word: 'Pachamama',
+                etymology: 'Del quechua pacha (universo/tiempo) y mama (madre).',
+                def: 'Deidad ancestral representativa de la tierra, la fertilidad y el sustento agrícola ambiental.',
+                example: 'La sociedad chimú realizaba ofrendas a la pachamama durante el ciclo del sembrío.'
+            },
+            'dosel': {
+                word: 'Dosel vegetal',
+                etymology: 'Término biogeográfico.',
+                def: 'Capa o cubierta protectora de plantas que regula la radiación solar y la evaporación del agua en un ecosistema.',
+                example: 'El dosel de totora sobre los huachaques reducía la evaporación del agua subterránea.'
+            },
+            'cie-quich': {
+                word: 'Cie-quich',
+                etymology: 'Del idioma mochica.',
+                def: 'Soberano o monarca supremo del imperio Chimú que concentraba la jefatura política, militar y religiosa.',
+                example: 'El Cie-quich dirigía las expansiones territoriales e interconexiones de los valles costeros.'
+            },
+            'adobe': {
+                word: 'Adobe',
+                etymology: 'Del árabe hispánico aṭ-ṭūb.',
+                def: 'Masa de barro sin cocer con paja moldeada en bloques y secada al sol; elemento arquitectónico base en la costa prehispánica.',
+                example: 'Chan Chan se conserva como la urbe de adobe más extensa de América.'
+            },
+            'el-nino': {
+                word: 'El Niño Costero',
+                etymology: 'Fenómeno hidrometeorológico regional.',
+                def: 'Evento de variabilidad climática originado por el calentamiento anómalo del Océano Pacífico costero, produciendo intensas lluvias e inundaciones.',
+                example: 'El fenómeno de El Niño Costero desgastó periódicamente las estructuras de adobe y canales chimúes.'
+            }
+        };
+
+        let currentGlossaryWord = '';
+
+        function openGlossary(key) {
+            const item = glossaryData[key];
+            if (!item) return;
+            currentGlossaryWord = item.word;
+            document.getElementById('g-word').textContent = item.word;
+            document.getElementById('g-etymology').textContent = item.etymology;
+            document.getElementById('g-def').textContent = item.def;
+            document.getElementById('g-example').textContent = `"${item.example}"`;
+            document.getElementById('glossary-modal').classList.remove('hidden');
+        }
+
+        function closeGlossary() {
+            document.getElementById('glossary-modal').classList.add('hidden');
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function speakCurrentWord() {
+            if (!('speechSynthesis' in window)) {
+                alert('Tu navegador no soporta síntesis de voz (TTS).');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const textToSpeak = `${currentGlossaryWord}. ${document.getElementById('g-def').textContent}`;
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'es-PE'; // Spanish Peru if available, or fallback es-ES
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /* ----------------------------------------------------
+           2. WEB AUDIO API SYNTHETIC SOUND EFFECTS
+           ---------------------------------------------------- */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'correct') {
+                // Success Arpeggio
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else if (type === 'wrong') {
+                // Error Buzz
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.setValueAtTime(130, now + 0.15);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'fanfare') {
+                // Level completion fanfare
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.15); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.3); // G5
+                osc.frequency.setValueAtTime(1046.50, now + 0.45); // C6
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+                osc.start(now);
+                osc.stop(now + 0.8);
+            }
+        }
+
+        /* ----------------------------------------------------
+           3. HIGHLIGHTER TOOLBAR LOGIC
+           ---------------------------------------------------- */
+        let currentHlColor = 'yellow';
+
+        function setHighlighterColor(color) {
+            currentHlColor = color;
+            document.querySelectorAll('.hl-picker-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-yellow-500', 'ring-green-500', 'ring-blue-500');
+            });
+            const selectedBtn = document.getElementById(`hl-btn-${color}`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('ring-2', `ring-${color}-500`);
+            }
+        }
+
+        function applyHighlightToSelection() {
+            const userSelection = window.getSelection();
+            if (!userSelection || userSelection.isCollapsed || userSelection.rangeCount === 0) {
+                alert('Selecciona primero un texto dentro de la lectura con tu ratón o dedo para resaltarlo.');
+                return;
+            }
+
+            const range = userSelection.getRangeAt(0);
+            const mark = document.createElement('mark');
+            mark.className = `hl-${currentHlColor}`;
+            
+            try {
+                range.surroundContents(mark);
+                userSelection.removeAllRanges();
+            } catch (e) {
+                alert('Por favor selecciona texto únicamente dentro de un mismo párrafo.');
+            }
+        }
+
+        function clearHighlights() {
+            const container = document.getElementById('story-content-container');
+            const marks = container.querySelectorAll('mark');
+            marks.forEach(m => {
+                const parent = m.parentNode;
+                while (m.firstChild) {
+                    parent.insertBefore(m.firstChild, m);
+                }
+                parent.removeChild(m);
+            });
+        }
+
+        /* ----------------------------------------------------
+           4. ACCESSIBILITY CONTROLS (THEME & FONT SIZE)
+           ---------------------------------------------------- */
+        let currentFontSizeRem = 1.0;
+
+        function changeFontSize(delta) {
+            currentFontSizeRem += delta * 0.1;
+            if (currentFontSizeRem < 0.85) currentFontSizeRem = 0.85;
+            if (currentFontSizeRem > 1.4) currentFontSizeRem = 1.4;
+            const container = document.getElementById('story-content-container');
+            container.style.fontSize = `${currentFontSizeRem}rem`;
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon text-lg';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun text-lg text-amber-300';
+            }
+        }
+
+        /* ----------------------------------------------------
+           5. NAVIGATION BETWEEN CHAPTERS
+           ---------------------------------------------------- */
+        function switchChapter(num) {
+            // Hide all chapters
+            document.querySelectorAll('.chapter-block').forEach(el => el.classList.add('hidden'));
+            // Show target
+            document.getElementById(`chapter-${num}`).classList.remove('hidden');
+
+            // Update Tab styles
+            for (let i = 1; i <= 3; i++) {
+                const tab = document.getElementById(`tab-cap${i}`);
+                if (i === num) {
+                    tab.className = "chapter-tab flex-1 py-3 px-4 font-bold text-center border-b-4 border-carmine text-carmine dark:text-red-400 flex items-center justify-center space-x-2 whitespace-nowrap";
+                } else {
+                    tab.className = "chapter-tab flex-1 py-3 px-4 font-medium text-slate-500 border-b-4 border-transparent hover:text-carmine flex items-center justify-center space-x-2 whitespace-nowrap";
+                }
+            }
+        }
+
+        /* ----------------------------------------------------
+           6. GAMIFICATION & QUIZ LOGIC
+           ---------------------------------------------------- */
+        const answeredQuestions = new Set();
+        let totalStars = 0;
+
+        function updateProgress() {
+            document.getElementById('star-count').textContent = totalStars;
+            document.getElementById('diploma-star-val').textContent = totalStars;
+            const pct = Math.round((totalStars / 9) * 100);
+            document.getElementById('global-progress').style.width = `${pct}%`;
+
+            if (totalStars >= 9) {
+                document.getElementById('diploma-form').classList.remove('hidden');
+                document.getElementById('diploma-status-msg').innerHTML = '<span class="text-emerald-600 font-extrabold">¡Felicitaciones! Has ganado las 9 estrellas. Ingresa tu nombre para generar tu Diploma.</span>';
+                playSound('fanfare');
+            }
+        }
+
+        function renderFeedback(elementId, isCorrect, msg) {
+            const fb = document.getElementById(elementId);
+            fb.classList.remove('hidden', 'text-emerald-600', 'text-red-600');
+            if (isCorrect) {
+                fb.classList.add('text-emerald-600');
+                fb.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> ¡Correcto! ${msg}`;
+            } else {
+                fb.classList.add('text-red-600');
+                fb.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> Incorrecto. ${msg}`;
+            }
+        }
+
+        // Q1 Check
+        function checkQ1() {
+            if (answeredQuestions.has(1)) return;
+            const val = document.querySelector('input[name="q1"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'B') {
+                answeredQuestions.add(1);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q1-feedback', true, 'El Cie-quich era el gobernante supremo del Reino Chimú.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q1-feedback', false, 'Revisa el texto del Capítulo 1.');
+            }
+        }
+
+        // Q2 Check
+        function checkQ2() {
+            if (answeredQuestions.has(2)) return;
+            const val = document.getElementById('q2-select').value;
+            if (!val) return alert('Selecciona un orden.');
+
+            if (val === '2') {
+                answeredQuestions.add(2);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q2-feedback', true, 'Excelente orden: Cie-quich -> Artesanos -> Pescadores.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q2-feedback', false, 'Recuerda la pirámide social con el soberano a la cabeza.');
+            }
+        }
+
+        // Q3 Check
+        function checkQ3() {
+            if (answeredQuestions.has(3)) return;
+            const val = document.querySelector('input[name="q3"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'B') {
+                answeredQuestions.add(3);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q3-feedback', true, 'Utiliza el nexo "como" para comparar: es un Símil.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q3-feedback', false, 'Observa la palabra "como" en el enunciado.');
+            }
+        }
+
+        // Q4 Check
+        function checkQ4() {
+            if (answeredQuestions.has(4)) return;
+            const val = document.querySelector('input[name="q4"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'A') {
+                answeredQuestions.add(4);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q4-feedback', true, 'Los wachaques eran huertos hundidos que aprovechaban la napa freática.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q4-feedback', false, 'Revisa la definición del glosario o el capítulo 2.');
+            }
+        }
+
+        // Q5 Check
+        function checkQ5() {
+            if (answeredQuestions.has(5)) return;
+            const val = document.querySelector('input[name="q5"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'B') {
+                answeredQuestions.add(5);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q5-feedback', true, 'El canal La Cumbre recorría 80 km desde el río Chicama.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q5-feedback', false, 'Vuelve a leer el párrafo sobre La Cumbre.');
+            }
+        }
+
+        // Q6 Check
+        function checkQ6() {
+            if (answeredQuestions.has(6)) return;
+            const val = document.querySelector('input[name="q6"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'B') {
+                answeredQuestions.add(6);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q6-feedback', true, 'Es un texto de carácter expositivo y explicativo histórico.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q6-feedback', false, 'Analiza la intención principal del texto.');
+            }
+        }
+
+        // Q7 Check
+        function checkQ7() {
+            if (answeredQuestions.has(7)) return;
+            const val = document.querySelector('input[name="q7"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'B') {
+                answeredQuestions.add(7);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q7-feedback', true, 'El adobe al ser de barro se desgasta gravemente con las lluvias extremas.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q7-feedback', false, 'Piensa en el material con el que construyeron Chan Chan.');
+            }
+        }
+
+        // Q8 Check
+        function checkQ8() {
+            if (answeredQuestions.has(8)) return;
+            const val = document.querySelector('input[name="q8"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'B') {
+                answeredQuestions.add(8);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q8-feedback', true, 'La prevención y mantenimiento de drenajes salva vidas e infraestructura.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q8-feedback', false, 'Piensa en la gestión del riesgo de desastres.');
+            }
+        }
+
+        // Q9 Check
+        function checkQ9() {
+            if (answeredQuestions.has(9)) return;
+            const val = document.querySelector('input[name="q9"]:checked')?.value;
+            if (!val) return alert('Selecciona una opción.');
+
+            if (val === 'A') {
+                answeredQuestions.add(9);
+                totalStars++;
+                playSound('correct');
+                renderFeedback('q9-feedback', true, 'El antónimo (opuesto) de resiliencia/fortaleza es fragilidad.');
+                updateProgress();
+            } else {
+                playSound('wrong');
+                renderFeedback('q9-feedback', false, 'Se te pide el ANTÓNIMO (significado opuesto).');
+            }
+        }
+
+        /* ----------------------------------------------------
+           7. DIPLOMA GENERATION & PRINTING
+           ---------------------------------------------------- */
+        function generateDiploma() {
+            const name = document.getElementById('student-name-input').value.trim();
+            if (!name) {
+                alert('Por favor escribe tu nombre completo para el certificado.');
+                return;
+            }
+
+            document.getElementById('diploma-student-name').textContent = name.toUpperCase();
+            document.getElementById('diploma-stars-result').textContent = `${totalStars} / 9 ⭐`;
+
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('es-PE', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('diploma-date').textContent = dateStr;
+
+            document.getElementById('diploma-modal').classList.remove('hidden');
+        }
+
+        function closeDiplomaModal() {
+            document.getElementById('diploma-modal').classList.add('hidden');
+        }
+
+        // Initialize default picker indicator
+        setHighlighterColor('yellow');
+    </script>
+</body>
+</html>
